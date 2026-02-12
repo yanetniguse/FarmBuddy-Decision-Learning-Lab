@@ -6,6 +6,26 @@ import matplotlib.pyplot as plt
 # =============================
 # App Configuration
 # =============================
+
+# =============================
+# Load Model Safely
+# =============================
+@st.cache_resource
+def load_model():
+    try:
+        return joblib.load("yield_rf_pipeline.joblib")
+    except FileNotFoundError:
+        st.error("Model file not found. Make sure 'yield_rf_pipeline.joblib' is in the project folder.")
+        return None
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
+
+model = load_model()
+
+if model is None:
+    st.stop()  # stop the app if model fails
+
 st.set_page_config(
     page_title="Farm Buddy 🌱",
     layout="wide"
@@ -14,12 +34,6 @@ st.set_page_config(
 # =============================
 # Load Model
 # =============================
-@st.cache_resource
-def load_model():
-    return joblib.load("yield_rf_pipeline.joblib")
-
-model = load_model()
-
 # =============================
 # Sidebar – Inputs
 # =============================
@@ -124,6 +138,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🧠 Learning Summary"
 ])
 
+
 # =============================
 # TAB 1 — HOME
 # =============================
@@ -179,12 +194,6 @@ with tab2:
     # -----------------------------
     # Load Model
     # -----------------------------
-    @st.cache_resource
-    def load_model():
-        return joblib.load("yield_rf_pipeline.joblib")
-
-    model = load_model()
-    st.success("Model loaded successfully")
 
     # -----------------------------
     # Prepare Current Inputs
