@@ -10,6 +10,10 @@ import matplotlib.pyplot as plt
 # =============================
 # Load Model Safely
 # =============================
+st.set_page_config(
+    page_title="Farm Buddy 🌱",
+    layout="wide"
+)
 @st.cache_resource
 def load_model():
     try:
@@ -25,11 +29,6 @@ model = load_model()
 
 if model is None:
     st.stop()  # stop the app if model fails
-
-st.set_page_config(
-    page_title="Farm Buddy 🌱",
-    layout="wide"
-)
 
 # =============================
 # Load Model
@@ -804,3 +803,4 @@ with tab5:
     st.caption(
         "Tab 5 is designed as a teaching assistant — explaining outcomes, encouraging reflection, and guiding experimentation."
     )
+
